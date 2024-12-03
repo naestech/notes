@@ -11,12 +11,14 @@ pop: removing the top element from the stack.
 
 peek: looking at the top element without removing it.
 
-<!-- 
+
 ---
+
 ## **how it works**
+
 ### **diagram**
-add image.png 
--->
+<img width="278" alt="image" src="https://github.com/user-attachments/assets/5c1a17cc-9d44-4b30-99fe-11989d7df9df">
+
 
 ---
 
