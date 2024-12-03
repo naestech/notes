@@ -19,8 +19,8 @@ right pointer: the ending position of the window.
 ## **how it works**
 
 ### **diagram**
+<img width="563" alt="image (1)" src="https://github.com/user-attachments/assets/5038f13e-453e-46ba-9f61-b14e05c5da4b">
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/d61f2617-4cd7-47f3-8c1b-42b35e353d1e/762db12a-07a8-40f9-b925-aeb9a28970c0/image.png)
 
 ---
 
