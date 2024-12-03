@@ -35,8 +35,8 @@ modulus (%): division remainder.
 ## how it works
 
 ### diagram
+![IMG_4287C0837D6B-1 (1)](https://github.com/user-attachments/assets/eec69586-effa-4bd0-9b8d-520b6c4b2d47)
 
-![IMG_4287C0837D6B-1.jpeg](https://prod-files-secure.s3.us-west-2.amazonaws.com/d61f2617-4cd7-47f3-8c1b-42b35e353d1e/a3b175ea-f61e-4d35-8e0d-55a21a6db41f/IMG_4287C0837D6B-1.jpeg)
 
 ---
 
