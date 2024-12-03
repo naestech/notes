@@ -16,7 +16,9 @@ increment: moving a pointer forward in the data structure.
 
 ### **diagram**
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/d61f2617-4cd7-47f3-8c1b-42b35e353d1e/a387ad8b-322d-491b-8bab-4ec4df9d0a68/image.png)
+<img width="377" alt="image (2)" src="https://github.com/user-attachments/assets/278df1ba-bf80-4b37-81fc-7c7e506ff47b">
+
+
 
 ---
 
