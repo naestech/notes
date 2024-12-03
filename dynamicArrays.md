@@ -20,7 +20,8 @@ capacity: total memory currently allocated.
 
 ### **diagram**
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/d61f2617-4cd7-47f3-8c1b-42b35e353d1e/34724ae9-9cc0-4505-bd46-8b9e7cd6bcb6/image.png)
+<img width="471" alt="image (3)" src="https://github.com/user-attachments/assets/12d18f79-f69d-4f16-b625-33f9ce12a957">
+
 
 ---
 
