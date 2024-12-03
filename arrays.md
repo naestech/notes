@@ -16,7 +16,8 @@ length: number of elements in the array.
 
 ### **diagram**
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/d61f2617-4cd7-47f3-8c1b-42b35e353d1e/8f3a5c3a-1f1d-4d22-94ce-4c92ce42b6a9/image.png)
+<img width="510" alt="image (4)" src="https://github.com/user-attachments/assets/4ff57980-2c32-435f-9ed5-b10c98b851e7">
+
 
 ---
 
