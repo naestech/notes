@@ -28,109 +28,267 @@
 ## Binary Search
 
 What is Binary Search?
+A divide-and-conquer algorithm that searches for a target value in a sorted array by repeatedly dividing the search space in half.
 
 What are the key characteristics of Binary Search?
+1. Requires a sorted array
+2. Divides search space in half each time
+3. Compares target with middle element
 
 When should you use Binary Search?
+When searching for an element in a sorted array and you need better than O(n) time complexity.
 
 What are the advantages of Binary Search?
+Fast search time with O(log n) time complexity, making it efficient for large sorted datasets.
 
 What are the disadvantages of Binary Search?
+Requires a sorted array, and the sorting overhead may not be worth it for small arrays.
 
 How does Binary Search compare to Linear Search?
+Binary Search is O(log n) while Linear Search is O(n), but Binary Search requires sorted data while Linear Search works on unsorted data.
 
 How to implement Binary Search in pseudocode?
+1. Set left = 0, right = length-1
+2. While left <= right:
+   - mid = (left + right) / 2
+   - if target == mid: return mid
+   - if target < mid: right = mid-1
+   - else: left = mid+1
+3. Return -1
 
 How to implement Binary Search in Python?
+def binary_search(arr, target):
+    left, right = 0, len(arr)-1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target: return mid
+        if arr[mid] < target: left = mid + 1
+        else: right = mid - 1
+    return -1
 
 What are some variations of Binary Search?
+1. Lower bound (first occurrence)
+2. Upper bound (last occurrence)
+3. Rotated array search
+4. Search in 2D sorted matrix
 
 How to choose between different implementations of Binary Search?
+Choose based on requirements: recursive for cleaner code, iterative for better space complexity, or modified for specific cases like finding bounds.
 
 What are common operations performed on Binary Search?
+1. Finding exact matches
+2. Finding insertion points
+3. Finding bounds (lower/upper)
+4. Searching in rotated arrays
 
 How to perform search operations using Binary Search?
+Compare target with middle element, then search left half if target is smaller, or right half if target is larger, until found or space exhausted.
 
 How to implement search operations for Binary Search in pseudocode?
+1. Find mid = (left + right) / 2
+2. If arr[mid] == target: return mid
+3. If arr[mid] > target: search left half
+4. If arr[mid] < target: search right half
+5. Repeat until found or space exhausted
 
 How to implement search operations for Binary Search in Python?
+def binary_search(arr, target):
+    left, right = 0, len(arr)-1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target: return mid
+        if arr[mid] < target: left = mid + 1
+        else: right = mid - 1
+    return -1
 
 How to debug common issues with Binary Search?
+1. Check array is sorted
+2. Verify left/right bounds
+3. Check mid calculation
+4. Ensure proper comparison operators
+5. Test edge cases
 
 What are the edge cases to consider when using Binary Search?
+1. Empty array
+2. Single element array
+3. Target not in array
+4. Duplicate elements
+5. Target at boundaries
 
 How does Binary Search handle duplicates?
+Standard Binary Search finds any occurrence; modified versions can find first or last occurrence using additional comparisons.
 
 How does Binary Search behave with large datasets?
+Performs efficiently with O(log n) time complexity, making it scalable for large sorted datasets.
 
 What is the time complexity of Binary Search?
+O(log n) time complexity, where n is the size of the array.
 
 What is the space complexity of Binary Search?
+O(1) for iterative implementation, O(log n) for recursive implementation due to call stack.
 
 What are the trade-offs between time and space complexity for Binary Search?
+Iterative uses O(1) space but may be less readable, recursive uses O(log n) space but may be clearer to understand.
 
 What is the worst-case scenario for Binary Search?
+Target not in array or at last position checked, requiring log(n) comparisons.
 
 What are the common pitfalls when using Binary Search?
+1. Using on unsorted array
+2. Integer overflow in mid calculation
+3. Incorrect boundary updates
+4. Off-by-one errors
 
 How can you optimize Binary Search for better performance?
+1. Use bit shift for mid calculation
+2. Avoid recursion for better space
+3. Use template patterns for specific cases
+4. Cache-friendly access patterns
 
 What is a real-world application of Binary Search?
+Dictionary lookup, finding files in sorted directories, or determining optimal values in monotonic functions.
 
 ## Sorting Algorithms
 
 What is Quick Sort?
+A divide-and-conquer sorting algorithm that selects a 'pivot' element and partitions the array around it, recursively sorting the sub-arrays.
 
 What are the key characteristics of Quick Sort?
+1. In-place sorting
+2. Uses pivot element
+3. Partitioning strategy
+4. Recursive implementation
 
 When should you use Quick Sort?
+When you need an efficient, in-place sorting algorithm and average-case performance is more important than worst-case guarantees.
 
 What are the advantages of Quick Sort?
+1. Average case O(n log n)
+2. In-place sorting
+3. Cache-friendly
+4. Good for large datasets
 
 What are the disadvantages of Quick Sort?
+1. Worst case O(n²) time complexity
+2. Not stable sort
+3. Performance depends on pivot selection
+4. Poor performance on nearly sorted arrays
 
 How does Quick Sort compare to Merge Sort?
+Quick Sort is in-place but unstable with O(n²) worst case, while Merge Sort is stable with O(n log n) worst case but requires O(n) extra space.
 
 How to implement Quick Sort in pseudocode?
+1. Choose pivot
+2. Partition array:
+   - Move elements < pivot to left
+   - Move elements > pivot to right
+3. Recursively sort left partition
+4. Recursively sort right partition
 
 How to implement Quick Sort in Python?
+def quicksort(arr):
+    if len(arr) <= 1: return arr
+    pivot = arr[len(arr)//2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quicksort(left) + middle + quicksort(right)
 
 What are some variations of Quick Sort?
+1. Randomized Quick Sort
+2. Dual Pivot Quick Sort
+3. Three-Way Quick Sort
+4. Iterative Quick Sort
 
 How to choose between different implementations of Quick Sort?
+Choose based on data characteristics: randomized for unknown data distribution, three-way for many duplicates, dual-pivot for better average performance.
 
 What are common operations performed on Quick Sort?
+1. Pivot selection
+2. Partitioning
+3. Swapping elements
+4. Recursive sorting of partitions
 
 How to perform sorting operations using Quick Sort?
+1. Select pivot element
+2. Partition array around pivot
+3. Recursively sort sub-arrays
+4. Combine results
 
 How to implement sorting operations for Quick Sort in pseudocode?
+partition(arr, low, high):
+1. Choose pivot = arr[high]
+2. i = low - 1
+3. For j from low to high-1:
+   if arr[j] <= pivot:
+     i++
+     swap(arr[i], arr[j])
+4. swap(arr[i+1], arr[high])
+5. return i+1
 
 How to implement sorting operations for Quick Sort in Python?
+def partition(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
 
 How to debug common issues with Quick Sort?
+1. Check pivot selection strategy
+2. Verify partitioning logic
+3. Test base cases
+4. Monitor stack depth
+5. Check array bounds
 
 What are the edge cases to consider when using Quick Sort?
+1. Empty or single-element array
+2. Array with all identical elements
+3. Already sorted array
+4. Reverse sorted array
+5. Array with many duplicates
 
 How does Quick Sort handle duplicates?
+Standard Quick Sort may not handle duplicates efficiently; Three-Way Quick Sort partitions elements into less than, equal to, and greater than pivot.
 
 How does Quick Sort behave with large datasets?
+Performs well with O(n log n) average case time complexity and good cache locality, making it efficient for large datasets.
 
 What is the time complexity of Quick Sort?
+Average case: O(n log n)
+Worst case: O(n²)
+Best case: O(n log n)
 
 What is the space complexity of Quick Sort?
+O(log n) average case for recursive stack space, O(n) worst case for degenerate recursion.
 
 What are the trade-offs between time and space complexity for Quick Sort?
+In-place sorting saves space but may have worse time complexity in worst case; better pivot selection can improve time but may need extra space.
 
 What is the worst-case scenario for Quick Sort?
+Already sorted or reverse sorted array with poor pivot selection (always choosing first/last element), leading to O(n²) time complexity.
 
 What are the common pitfalls when using Quick Sort?
+1. Poor pivot selection
+2. Not handling duplicates efficiently
+3. Recursive stack overflow
+4. Unstable sorting
+5. Poor performance on nearly sorted data
 
 How can you optimize Quick Sort for better performance?
+1. Use median-of-three pivot selection
+2. Implement three-way partitioning
+3. Switch to insertion sort for small subarrays
+4. Use tail-call optimization
+5. Implement iterative version
 
 What is a real-world application of Quick Sort?
+Implemented as the default sorting algorithm in many programming languages' standard libraries, used in file systems for directory listing.
 
 ## Arrays
-
 What is an Array?
 
 What are the key characteristics of an Array?
@@ -180,9 +338,7 @@ What are the common pitfalls when using an Array?
 How can you optimize an Array for better performance?
 
 What is a real-world application of an Array?
-
 ## Dynamic Arrays
-
 What is a Dynamic Array?
 
 What are the key characteristics of a Dynamic Array?
