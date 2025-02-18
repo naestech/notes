@@ -3,7 +3,7 @@
 ## Table of Contents
 1. Algorithms
    - Binary Search
-   - Sorting Algorithms
+   - Sorting Algorithms (Quick Sort, Merge Sort, etc.)
 2. Data Structures
    - Arrays
    - Dynamic Arrays
@@ -25,1020 +25,1012 @@
    - Intervals
    - Bit Manipulation
 
-## ALGORITHMS
-
-### Binary Search
-
-#### Concept Cards
-Q: What is binary search?
-A: A search algorithm that finds a target value in a sorted array by repeatedly dividing the search range in half.
-
-Q: What is the key requirement for binary search?
-A: The input array must be sorted.
-
-Q: What is the time complexity of binary search?
-A: O(log n), because we divide the search space in half in each step.
-
-#### Implementation Cards
-Q: Write pseudocode for binary search
-A: 
-``` python
-function binarySearch(array, target):
-    left = 0
-    right = length(array) - 1
-    
-    while left <= right:
-        mid = left + (right - left) / 2
-        
-        if array[mid] == target:
-            return mid
-        else if array[mid] < target:
-            left = mid + 1
-        else:
-            right = mid - 1
-            
-    return -1
-```
-
-Q: Implement binary search in Python
-A: 
-``` python
-def binary_search(arr: list[int], target: int) -> int:
-    left, right = 0, len(arr) - 1
-    
-    while left <= right:
-        mid = left + (right - left) // 2
-        
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            left = mid + 1
-        else:
-            right = mid - 1
-            
-    return -1
-```
-
-Q: How would you modify binary search to find the leftmost occurrence?
-A: 
-```python
-def binary_search_leftmost(arr: list[int], target: int) -> int:
-    left, right = 0, len(arr) - 1
-    result = -1
-    
-    while left <= right:
-        mid = left + (right - left) // 2
-        
-        if arr[mid] == target:
-            result = mid  # Save the position
-            right = mid - 1  # Continue searching left
-        elif arr[mid] < target:
-            left = mid + 1
-        else:
-            right = mid - 1
-            
-    return result
-```
-
-### Sorting Algorithms
-
-#### Quick Sort
-Q: What is QuickSort?
-A: A divide-and-conquer sorting algorithm that picks a 'pivot' element and partitions the array around it.
-
-Q: What is the average time complexity of QuickSort?
-A: O(n log n)
-
-Q: Implement QuickSort in Python
-A: 
-```python
-def quicksort(arr: list[int]) -> list[int]:
-    if len(arr) <= 1:
-        return arr
-        
-    pivot = arr[len(arr) // 2]
-    left = [x for x in arr if x < pivot]
-    middle = [x for x in arr if x == pivot]
-    right = [x for x in arr if x > pivot]
-    
-    return quicksort(left) + middle + quicksort(right)
-```
-
-#### Merge Sort
-Q: What is MergeSort?
-A: A divide-and-conquer algorithm that divides array into two halves, recursively sorts them, and merges.
-
-Q: What is the time complexity of MergeSort?
-A: O(n log n) in all cases
-
-Q: Implement MergeSort in Python
-A: 
-```python
-def mergesort(arr: list[int]) -> list[int]:
-    if len(arr) <= 1:
-        return arr
-        
-    mid = len(arr) // 2
-    left = mergesort(arr[:mid])
-    right = mergesort(arr[mid:])
-    
-    return merge(left, right)
-    
-def merge(left: list[int], right: list[int]) -> list[int]:
-    result = []
-    i = j = 0
-    
-    while i < len(left) and j < len(right):
-        if left[i] <= right[j]:
-            result.append(left[i])
-            i += 1
-        else:
-            result.append(right[j])
-            j += 1
-            
-    result.extend(left[i:])
-    result.extend(right[j:])
-    return result
-```
-
-## DATA STRUCTURES
-
-### Hash Map
-
-#### Concept Cards
-Q: What is a hash map?
-A: A data structure that implements an associative array abstract data type, using a hash function to map keys to values.
-
-Q: What is the average time complexity for operations?
-A: O(1) for insert, delete, and lookup
-
-Q: What causes collisions in a hash map?
-A: When two different keys hash to the same index
-
-#### Implementation Cards
-Q: Write pseudocode for a basic hash map
-A: 
-```
-class HashMap:
-    function init(size):
-        create array of size
-        initialize count = 0
-        
-    function hash(key):
-        return hash_function(key) % size
-        
-    function put(key, value):
-        index = hash(key)
-        store (key,value) at index (handle collisions)
-        
-    function get(key):
-        index = hash(key)
-        return value at index (handle collisions)
-        
-    function remove(key):
-        index = hash(key)
-        remove value at index (handle collisions)
-```
-
-Q: Implement a basic hash map in Python
-A: 
-```python
-class HashMap:
-    def __init__(self, size=1000):
-        self.size = size
-        self.map = [[] for _ in range(self.size)]
-    
-    def _get_hash(self, key: str) -> int:
-        return hash(key) % self.size
-    
-    def put(self, key: str, value: any) -> None:
-        hash_key = self._get_hash(key)
-        bucket = self.map[hash_key]
-        
-        for i, (k, v) in enumerate(bucket):
-            if k == key:
-                bucket[i] = (key, value)
-                return
-        bucket.append((key, value))
-    
-    def get(self, key: str) -> any:
-        hash_key = self._get_hash(key)
-        bucket = self.map[hash_key]
-        
-        for k, v in bucket:
-            if k == key:
-                return v
-        return None
-    
-    def remove(self, key: str) -> None:
-        hash_key = self._get_hash(key)
-        bucket = self.map[hash_key]
-        
-        for i, (k, v) in enumerate(bucket):
-            if k == key:
-                del bucket[i]
-                return
-```
-
-### Linked List
-
-#### Concept Cards
-Q: What is a linked list?
-A: A sequential data structure where each element points to the next element in the sequence.
-
-Q: What are the advantages of linked lists over arrays?
-A: Dynamic size, efficient insertion/deletion at beginning
-
-Q: What is the time complexity of operations?
-A: Access O(n), Insert/Delete at beginning O(1), Insert/Delete at position O(n)
-
-#### Implementation Cards
-Q: Write pseudocode for a singly linked list
-A: 
-```
-class Node:
-    value
-    next = null
-
-class LinkedList:
-    function init():
-        head = null
-        
-    function insert_front(value):
-        new_node = Node(value)
-        new_node.next = head
-        head = new_node
-        
-    function delete_front():
-        if head is null: return
-        head = head.next
-        
-    function search(value):
-        current = head
-        while current is not null:
-            if current.value == value: return current
-            current = current.next
-        return null
-```
-
-Q: Implement a singly linked list in Python
-A: 
-```python
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-class LinkedList:
-    def __init__(self):
-        self.head = None
-    
-    def insert_front(self, val: int) -> None:
-        new_node = ListNode(val)
-        new_node.next = self.head
-        self.head = new_node
-    
-    def delete_front(self) -> None:
-        if not self.head:
-            return
-        self.head = self.head.next
-    
-    def search(self, val: int) -> ListNode:
-        current = self.head
-        while current:
-            if current.val == val:
-                return current
-            current = current.next
-        return None
-    
-    def insert_after(self, node: ListNode, val: int) -> None:
-        if not node:
-            return
-        new_node = ListNode(val)
-        new_node.next = node.next
-        node.next = new_node
-```
-
-### Queue
-
-#### Concept Cards
-Q: What is a queue?
-A: A linear data structure that follows First-In-First-Out (FIFO) principle.
-
-Q: What are the main operations of a queue?
-A: enqueue (add to back) and dequeue (remove from front)
-
-Q: What is the time complexity of queue operations?
-A: O(1) for both enqueue and dequeue
-
-#### Implementation Cards
-Q: Write pseudocode for a queue
-A: 
-```
-class Queue:
-    function init():
-        items = empty list
-        
-    function enqueue(value):
-        add value to end of items
-        
-    function dequeue():
-        if items is empty: return null
-        return remove and return first item
-        
-    function peek():
-        if items is empty: return null
-        return first item
-```
-
-Q: Implement a queue in Python
-A: 
-```python
-class Queue:
-    def __init__(self):
-        self.items = []
-    
-    def enqueue(self, val: any) -> None:
-        self.items.append(val)
-    
-    def dequeue(self) -> any:
-        if not self.is_empty():
-            return self.items.pop(0)
-        return None
-    
-    def peek(self) -> any:
-        if not self.is_empty():
-            return self.items[0]
-        return None
-    
-    def is_empty(self) -> bool:
-        return len(self.items) == 0
-```
-
-Q: Implement a queue using two stacks in Python
-A: 
-```python
-class QueueUsingStacks:
-    def __init__(self):
-        self.stack1 = []  # for enqueue
-        self.stack2 = []  # for dequeue
-    
-    def enqueue(self, val: any) -> None:
-        self.stack1.append(val)
-    
-    def dequeue(self) -> any:
-        if not self.stack2:
-            while self.stack1:
-                self.stack2.append(self.stack1.pop())
-        return self.stack2.pop() if self.stack2 else None
-```
-
-### Stack
-
-#### Concept Cards
-Q: What is a stack?
-A: A linear data structure that follows Last-In-First-Out (LIFO) principle.
-
-Q: What are the main operations of a stack?
-A: push (add to top) and pop (remove from top)
-
-Q: What is the time complexity of stack operations?
-A: O(1) for both push and pop
-
-#### Implementation Cards
-Q: Write pseudocode for a stack
-A: 
-```python
-class Stack:
-    function init():
-        items = empty list
-        
-    function push(value):
-        add value to end of items
-        
-    function pop():
-        if items is empty: return null
-        return remove and return last item
-        
-    function peek():
-        if items is empty: return null
-        return last item
-```
-
-Q: Implement a stack in Python
-A: 
-```python
-class Stack:
-    def __init__(self):
-        self.items = []
-    
-    def push(self, val: any) -> None:
-        self.items.append(val)
-    
-    def pop(self) -> any:
-        if not self.is_empty():
-            return self.items.pop()
-        return None
-    
-    def peek(self) -> any:
-        if not self.is_empty():
-            return self.items[-1]
-        return None
-    
-    def is_empty(self) -> bool:
-        return len(self.items) == 0
-```
-
-### Binary Tree
-
-#### Concept Cards
-Q: What is a binary tree?
-A: A tree data structure where each node has at most two children, referred to as left and right child.
-
-Q: What is a binary search tree (BST)?
-A: A binary tree where for each node, all left subtree values are less than the node's value, and all right subtree values are greater.
-
-Q: What is the time complexity of BST operations?
-A: Average: O(log n) for search, insert, delete. Worst case: O(n) if tree is unbalanced
-
-#### Implementation Cards
-Q: Write pseudocode for a binary tree node
-A: 
-```python
-class TreeNode:
-    value
-    left = null
-    right = null
-```
-
-Q: Implement a binary search tree in Python
-A: 
-```python
-class TreeNode:
-    def __init__(self, val=0):
-        self.val = val
-        self.left = None
-        self.right = None
-
-class BST:
-    def __init__(self):
-        self.root = None
-    
-    def insert(self, val: int) -> None:
-        if not self.root:
-            self.root = TreeNode(val)
-            return
-        
-        def _insert(node, val):
-            if val < node.val:
-                if not node.left:
-                    node.left = TreeNode(val)
-                else:
-                    _insert(node.left, val)
-            else:
-                if not node.right:
-                    node.right = TreeNode(val)
-                else:
-                    _insert(node.right, val)
-        
-        _insert(self.root, val)
-    
-    def search(self, val: int) -> TreeNode:
-        def _search(node, val):
-            if not node or node.val == val:
-                return node
-            if val < node.val:
-                return _search(node.left, val)
-            return _search(node.right, val)
-        
-        return _search(self.root, val)
-```
-
-Q: Implement common tree traversals in Python
-A: 
-```python
-def inorder(root: TreeNode) -> list[int]:
-    result = []
-    def _inorder(node):
-        if node:
-            _inorder(node.left)
-            result.append(node.val)
-            _inorder(node.right)
-    _inorder(root)
-    return result
-
-def preorder(root: TreeNode) -> list[int]:
-    result = []
-    def _preorder(node):
-        if node:
-            result.append(node.val)
-            _preorder(node.left)
-            _preorder(node.right)
-    _preorder(root)
-    return result
-
-def postorder(root: TreeNode) -> list[int]:
-    result = []
-    def _postorder(node):
-        if node:
-            _postorder(node.left)
-            _postorder(node.right)
-            result.append(node.val)
-    _postorder(root)
-    return result
-```
-
-### Trie (Prefix Tree)
-
-#### Concept Cards
-Q: What is a trie?
-A: A tree-like data structure used to store strings, where each node represents a character and paths from root to leaf form complete strings.
-
-Q: What are common use cases for tries?
-A: Autocomplete, spell checkers, IP routing tables
-
-Q: What is the time complexity of trie operations?
-A: O(m) where m is the length of the string for insert and search
-
-#### Implementation Cards
-Q: Implement a trie in Python
-A: 
-```python
-class TrieNode:
-    def __init__(self):
-        self.children = {}
-        self.is_end = False
-
-class Trie:
-    def __init__(self):
-        self.root = TrieNode()
-    
-    def insert(self, word: str) -> None:
-        node = self.root
-        for char in word:
-            if char not in node.children:
-                node.children[char] = TrieNode()
-            node = node.children[char]
-        node.is_end = True
-    
-    def search(self, word: str) -> bool:
-        node = self.root
-        for char in word:
-            if char not in node.children:
-                return False
-            node = node.children[char]
-        return node.is_end
-    
-    def starts_with(self, prefix: str) -> bool:
-        node = self.root
-        for char in prefix:
-            if char not in node.children:
-                return False
-            node = node.children[char]
-        return True
-```
-
-### Heap (Priority Queue)
-
-#### Concept Cards
-Q: What is a heap?
-A: A complete binary tree where each node's value follows the heap property (either min-heap or max-heap).
-
-Q: What is the heap property?
-A: In a max-heap, parent's value is greater than children. In a min-heap, parent's value is less than children.
-
-Q: What are the time complexities of heap operations?
-A: Insert: O(log n), Remove top: O(log n), Get top: O(1)
-
-#### Implementation Cards
-Q: Implement a min heap in Python
-A: 
-```python
-class MinHeap:
-    def __init__(self):
-        self.heap = []
-    
-    def parent(self, i: int) -> int:
-        return (i - 1) // 2
-    
-    def left_child(self, i: int) -> int:
-        return 2 * i + 1
-    
-    def right_child(self, i: int) -> int:
-        return 2 * i + 2
-    
-    def insert(self, val: int) -> None:
-        self.heap.append(val)
-        self._sift_up(len(self.heap) - 1)
-    
-    def extract_min(self) -> int:
-        if not self.heap:
-            return None
-        
-        min_val = self.heap[0]
-        last_val = self.heap.pop()
-        
-        if self.heap:
-            self.heap[0] = last_val
-            self._sift_down(0)
-            
-        return min_val
-    
-    def _sift_up(self, i: int) -> None:
-        parent = self.parent(i)
-        if i > 0 and self.heap[i] < self.heap[parent]:
-            self.heap[i], self.heap[parent] = self.heap[parent], self.heap[i]
-            self._sift_up(parent)
-    
-    def _sift_down(self, i: int) -> None:
-        min_idx = i
-        left = self.left_child(i)
-        right = self.right_child(i)
-        
-        if left < len(self.heap) and self.heap[left] < self.heap[min_idx]:
-            min_idx = left
-            
-        if right < len(self.heap) and self.heap[right] < self.heap[min_idx]:
-            min_idx = right
-            
-        if min_idx != i:
-            self.heap[i], self.heap[min_idx] = self.heap[min_idx], self.heap[i]
-            self._sift_down(min_idx)
-```
-
-## TECHNIQUES
-
-### Sliding Window
-
-#### Concept Cards
-Q: What is the sliding window technique?
-A: A method to perform operations on arrays/strings using a window that slides through the data.
-
-Q: When should you use sliding window?
-A: For problems involving contiguous sequences in arrays/strings where you need to find subsets of data.
-
-Q: What are common sliding window patterns?
-A: Fixed-size window, variable-size window with conditions
-
-#### Implementation Cards
-Q: Implement fixed-size sliding window template in Python
-A: 
-```python
-def fixed_sliding_window(arr: list[int], k: int) -> list[int]:
-    if not arr or k <= 0:
-        return []
-    
-    result = []
-    window_sum = sum(arr[:k])  # Initial window
-    result.append(window_sum)
-    
-    for i in range(k, len(arr)):
-        # Remove first element of previous window
-        # Add last element of current window
-        window_sum = window_sum - arr[i-k] + arr[i]
-        result.append(window_sum)
-    
-    return result
-```
-
-Q: Implement variable-size sliding window template in Python
-A: 
-```python
-def variable_sliding_window(arr: list[int], target: int) -> int:
-    window_sum = 0
-    window_start = 0
-    min_length = float('inf')
-    
-    for window_end in range(len(arr)):
-        window_sum += arr[window_end]
-        
-        while window_sum >= target:
-            min_length = min(min_length, window_end - window_start + 1)
-            window_sum -= arr[window_start]
-            window_start += 1
-    
-    return min_length if min_length != float('inf') else 0
-```
-
-### Two Pointers
-
-#### Concept Cards
-Q: What is the two pointers technique?
-A: A method using two pointers to solve array problems, often moving towards each other or in the same direction.
-
-Q: When should you use two pointers?
-A: For problems involving searching pairs in sorted arrays, or when you need to track two positions in an array.
-
-#### Implementation Cards
-Q: Implement two pointers template for pair sum in Python
-A: 
-```python
-def find_pair_sum(arr: list[int], target: int) -> tuple[int, int]:
-    left, right = 0, len(arr) - 1
-    
-    while left < right:
-        current_sum = arr[left] + arr[right]
-        if current_sum == target:
-            return (left, right)
-        elif current_sum < target:
-            left += 1
-        else:
-            right -= 1
-    
-    return (-1, -1)  # No pair found
-```
-
-### Dynamic Programming
-
-#### Concept Cards
-Q: What is dynamic programming?
-A: A method to solve complex problems by breaking them down into simpler subproblems and storing the results for future use.
-
-Q: What are the key components of DP?
-A: 1. Optimal substructure 2. Overlapping subproblems 3. State and transition function
-
-#### Implementation Cards
-Q: Implement fibonacci using DP in Python
-A: 
-```python
-def fib_dp(n: int) -> int:
-    if n <= 1:
-        return n
-    
-    dp = [0] * (n + 1)
-    dp[1] = 1
-    
-    for i in range(2, n + 1):
-        dp[i] = dp[i-1] + dp[i-2]
-    
-    return dp[n]
-```
-
-Q: Implement 0/1 knapsack using DP in Python
-A: 
-```python
-def knapsack(values: list[int], weights: list[int], capacity: int) -> int:
-    n = len(values)
-    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
-    
-    for i in range(1, n + 1):
-        for w in range(capacity + 1):
-            if weights[i-1] <= w:
-                dp[i][w] = max(
-                    values[i-1] + dp[i-1][w-weights[i-1]],
-                    dp[i-1][w]
-                )
-            else:
-                dp[i][w] = dp[i-1][w]
-    
-    return dp[n][capacity]
-```
-
-### Backtracking
-
-#### Concept Cards
-Q: What is backtracking?
-A: An algorithmic technique that considers searching every possible combination in a systematic way.
-
-Q: When should you use backtracking?
-A: For problems that require finding all (or some) solutions to a computational problem, particularly constraint satisfaction.
-
-#### Implementation Cards
-Q: Implement N-Queens using backtracking in Python
-A: 
-```python
-def solve_n_queens(n: int) -> list[list[str]]:
-    def create_board():
-        return [['.' * n for _ in range(n)]]
-    
-    def can_place(row: int, col: int, queens: set) -> bool:
-        for prev_row, prev_col in queens:
-            if prev_col == col:
-                return False
-            if abs(prev_row - row) == abs(prev_col - col):
-                return False
-        return True
-    
-    def backtrack(row: int, queens: set) -> list[list[str]]:
-        if row == n:
-            board = create_board()
-            for r, c in queens:
-                board[r] = board[r][:c] + 'Q' + board[r][c+
-                ...
-```
-            
-
-### Greedy Algorithms
-
-#### Concept Cards
-Q: What is a greedy algorithm?
-A: An algorithmic paradigm that makes the locally optimal choice at each step, hoping to find a global optimum.
-
-Q: When should you use greedy algorithms?
-A: When local optimal choices lead to global optimal solution, like in activity selection or Huffman coding.
-
-Q: What are common examples of greedy problems?
-A: Minimum spanning tree, activity selection, coin change with unlimited coins.
-
-#### Implementation Cards
-Q: Implement activity selection in Python
-A: 
-```python
-def activity_selection(start: list[int], finish: list[int]) -> list[int]:
-    activities = sorted(zip(start, finish), key=lambda x: x[1])
-    selected = [0]  # First activity is always selected
-    last_finish = activities[0][1]
-    
-    for i in range(1, len(activities)):
-        if activities[i][0] >= last_finish:
-            selected.append(i)
-            last_finish = activities[i][1]
-    
-    return selected
-```
-
-### Intervals
-
-#### Concept Cards
-Q: What are interval problems?
-A: Problems involving ranges or periods with start and end points.
-
-Q: What are common interval operations?
-A: Merging overlapping intervals, finding intersections, checking for overlaps.
-
-#### Implementation Cards
-Q: Implement merge intervals in Python
-A: 
-```python
-def merge_intervals(intervals: list[list[int]]) -> list[list[int]]:
-    if not intervals:
-        return []
-        
-    # Sort by start time
-    intervals.sort(key=lambda x: x[0])
-    
-    result = [intervals[0]]
-    
-    for interval in intervals[1:]:
-        if interval[0] <= result[-1][1]:
-            result[-1][1] = max(result[-1][1], interval[1])
-        else:
-            result.append(interval)
-    
-    return result
-```
-
-Q: Implement interval intersection in Python
-A: 
-```python
-def interval_intersection(A: list[list[int]], B: list[list[int]]) -> list[list[int]]:
-    result = []
-    i = j = 0
-    
-    while i < len(A) and j < len(B):
-        start = max(A[i][0], B[j][0])
-        end = min(A[i][1], B[j][1])
-        
-        if start <= end:
-            result.append([start, end])
-            
-        if A[i][1] < B[j][1]:
-            i += 1
-        else:
-            j += 1
-            
-    return result
-```
-
-### Bit Manipulation
-
-#### Concept Cards
-Q: What is bit manipulation?
-A: Technique of manipulating individual bits in integers using bitwise operations.
-
-Q: What are common bit operations?
-A: AND (&), OR (|), XOR (^), NOT (~), Left Shift (<<), Right Shift (>>)
-
-Q: What are common bit manipulation tricks?
-A: Check if power of 2, count set bits, find single number in pairs
-
-#### Implementation Cards
-Q: Implement check if power of 2 in Python
-A: 
-```python
-def is_power_of_two(n: int) -> bool:
-    return n > 0 and (n & (n - 1)) == 0
-```
-
-Q: Implement count set bits in Python
-A: 
-```python
-def count_set_bits(n: int) -> int:
-    count = 0
-    while n:
-        count += n & 1
-        n >>= 1
-    return count
-```
-
-Q: Implement single number in Python
-A: 
-```python
-def find_single_number(nums: list[int]) -> int:
-    result = 0
-    for num in nums:
-        result ^= num
-    return result
-```
-
-### Math
-
-#### Concept Cards
-Q: What are common mathematical concepts in coding interviews?
-A: Prime numbers, GCD/LCM, factorials, combinations/permutations
-
-Q: What is the prime factorization of a number?
-A: Breaking down a number into its prime factors
-
-#### Implementation Cards
-Q: Implement prime number check in Python
-A: 
-```python
-def is_prime(n: int) -> bool:
-    if n < 2:
-        return False
-    for i in range(2, int(n ** 0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
-```
-
-Q: Implement GCD using Euclidean algorithm in Python
-A: 
-```python
-def gcd(a: int, b: int) -> int:
-    while b:
-        a, b = b, a % b
-    return a
-```
-
-### Common Patterns and Tips
-
-#### Interview Strategy Cards
-Q: What is the general approach to solving coding problems?
-A: 1. Understand the problem
-   2. Find edge cases
-   3. Design solution
-   4. Write code
-   5. Test code
-   6. Optimize if needed
-
-Q: What are common optimization techniques?
-A: 1. Hash maps for O(1) lookup
-   2. Two pointers to avoid nested loops
-   3. Sliding window for subarrays
-   4. Binary search for sorted arrays
-   5. Dynamic programming for overlapping subproblems
-
-Q: What are common space-time tradeoffs?
-A: 1. Using extra space to reduce time complexity
-   2. Memoization vs tabulation in DP
-   3. Preprocessing vs on-the-fly computation
-
-#### Common Pitfalls Cards
-Q: What are common mistakes to avoid?
-A: 1. Not handling edge cases
-   2. Not validating input
-   3. Off-by-one errors
-   4. Integer overflow
-   5. Not considering time/space complexity
-
-Q: What should you communicate during interviews?
-A: 1. Your thought process
-   2. Alternative approaches
-   3. Time and space complexity
-   4. Tradeoffs in your solution
-   5. Test cases and edge cases
-
-### System Design Considerations
-
-#### Scaling Cards
-Q: How do these data structures scale?
-A: 1. Arrays: Poor for large insertions/deletions
-   2. Hash Maps: Good for distributed systems with proper hashing
-   3. Trees: Good for balanced data distribution
-   4. Tries: Excellent for string-based lookups at scale
-
-Q: What are important factors in scaling?
-A: 1. Memory usage
-   2. CPU efficiency
-   3. I/O operations
-   4. Network bandwidth
-   5. Concurrent access patterns
-
-#### Implementation Trade-offs Cards
-Q: What are common implementation trade-offs?
-A: 1. Array vs Linked List: Random access vs Sequential access
-   2. Hash Table vs BST: Average vs Worst case complexity
-   3. BFS vs DFS: Memory vs Depth exploration
-   4. Iteration vs Recursion: Space vs Clarity
+## Binary Search
+
+What is Binary Search?
+
+What are the key characteristics of Binary Search?
+
+When should you use Binary Search?
+
+What are the advantages of Binary Search?
+
+What are the disadvantages of Binary Search?
+
+How does Binary Search compare to Linear Search?
+
+How to implement Binary Search in pseudocode?
+
+How to implement Binary Search in Python?
+
+What are some variations of Binary Search?
+
+How to choose between different implementations of Binary Search?
+
+What are common operations performed on Binary Search?
+
+How to perform search operations using Binary Search?
+
+How to implement search operations for Binary Search in pseudocode?
+
+How to implement search operations for Binary Search in Python?
+
+How to debug common issues with Binary Search?
+
+What are the edge cases to consider when using Binary Search?
+
+How does Binary Search handle duplicates?
+
+How does Binary Search behave with large datasets?
+
+What is the time complexity of Binary Search?
+
+What is the space complexity of Binary Search?
+
+What are the trade-offs between time and space complexity for Binary Search?
+
+What is the worst-case scenario for Binary Search?
+
+What are the common pitfalls when using Binary Search?
+
+How can you optimize Binary Search for better performance?
+
+What is a real-world application of Binary Search?
+
+## Sorting Algorithms
+
+What is Quick Sort?
+
+What are the key characteristics of Quick Sort?
+
+When should you use Quick Sort?
+
+What are the advantages of Quick Sort?
+
+What are the disadvantages of Quick Sort?
+
+How does Quick Sort compare to Merge Sort?
+
+How to implement Quick Sort in pseudocode?
+
+How to implement Quick Sort in Python?
+
+What are some variations of Quick Sort?
+
+How to choose between different implementations of Quick Sort?
+
+What are common operations performed on Quick Sort?
+
+How to perform sorting operations using Quick Sort?
+
+How to implement sorting operations for Quick Sort in pseudocode?
+
+How to implement sorting operations for Quick Sort in Python?
+
+How to debug common issues with Quick Sort?
+
+What are the edge cases to consider when using Quick Sort?
+
+How does Quick Sort handle duplicates?
+
+How does Quick Sort behave with large datasets?
+
+What is the time complexity of Quick Sort?
+
+What is the space complexity of Quick Sort?
+
+What are the trade-offs between time and space complexity for Quick Sort?
+
+What is the worst-case scenario for Quick Sort?
+
+What are the common pitfalls when using Quick Sort?
+
+How can you optimize Quick Sort for better performance?
+
+What is a real-world application of Quick Sort?
+
+## Arrays
+
+What is an Array?
+
+What are the key characteristics of an Array?
+
+When should you use an Array?
+
+What are the advantages of an Array?
+
+What are the disadvantages of an Array?
+
+How does an Array compare to a Linked List?
+
+How to implement an Array in pseudocode?
+
+How to implement an Array in Python?
+
+What are some variations of an Array?
+
+How to choose between different implementations of an Array?
+
+What are common operations performed on an Array?
+
+How to perform insertion/deletion operations on an Array?
+
+How to implement operations for an Array in pseudocode?
+
+How to implement operations for an Array in Python?
+
+How to debug common issues with an Array?
+
+What are the edge cases to consider when using an Array?
+
+How does an Array handle duplicates?
+
+How does an Array behave with large datasets?
+
+What is the time complexity of Array operations?
+
+What is the space complexity of an Array?
+
+What are the trade-offs between time and space complexity for an Array?
+
+What is the worst-case scenario for an Array?
+
+What are the common pitfalls when using an Array?
+
+How can you optimize an Array for better performance?
+
+What is a real-world application of an Array?
+
+## Dynamic Arrays
+
+What is a Dynamic Array?
+
+What are the key characteristics of a Dynamic Array?
+
+When should you use a Dynamic Array?
+
+What are the advantages of a Dynamic Array?
+
+What are the disadvantages of a Dynamic Array?
+
+How does a Dynamic Array compare to a static Array?
+
+How to implement a Dynamic Array in pseudocode?
+
+How to implement a Dynamic Array in Python?
+
+What are some variations of a Dynamic Array?
+
+How to choose between different implementations of a Dynamic Array?
+
+What are common operations performed on a Dynamic Array?
+
+How to perform resizing operations on a Dynamic Array?
+
+How to implement operations for a Dynamic Array in pseudocode?
+
+How to implement operations for a Dynamic Array in Python?
+
+How to debug common issues with a Dynamic Array?
+
+What are the edge cases to consider when using a Dynamic Array?
+
+How does a Dynamic Array handle duplicates?
+
+How does a Dynamic Array behave with large datasets?
+
+What is the time complexity of Dynamic Array operations?
+
+What is the space complexity of a Dynamic Array?
+
+What are the trade-offs between time and space complexity for a Dynamic Array?
+
+What is the worst-case scenario for a Dynamic Array?
+
+What are the common pitfalls when using a Dynamic Array?
+
+How can you optimize a Dynamic Array for better performance?
+
+What is a real-world application of a Dynamic Array?
+
+## Graphs
+
+What is a Graph?
+
+What are the key characteristics of a Graph?
+
+When should you use a Graph?
+
+What are the advantages of a Graph?
+
+What are the disadvantages of a Graph?
+
+How does a Graph compare to a Tree?
+
+How to implement a Graph in pseudocode?
+
+How to implement a Graph in Python?
+
+What are some variations of a Graph?
+
+How to choose between different implementations of a Graph?
+
+What are common operations performed on a Graph?
+
+How to perform traversal operations on a Graph?
+
+How to implement operations for a Graph in pseudocode?
+
+How to implement operations for a Graph in Python?
+
+How to debug common issues with a Graph?
+
+What are the edge cases to consider when using a Graph?
+
+How does a Graph handle cycles?
+
+How does a Graph behave with large datasets?
+
+What is the time complexity of Graph operations?
+
+What is the space complexity of a Graph?
+
+What are the trade-offs between time and space complexity for a Graph?
+
+What is the worst-case scenario for a Graph?
+
+What are the common pitfalls when using a Graph?
+
+How can you optimize a Graph for better performance?
+
+What is a real-world application of a Graph?
+
+## Hash Maps
+
+What is a Hash Map?
+
+What are the key characteristics of a Hash Map?
+
+When should you use a Hash Map?
+
+What are the advantages of a Hash Map?
+
+What are the disadvantages of a Hash Map?
+
+How does a Hash Map compare to an Array?
+
+How to implement a Hash Map in pseudocode?
+
+How to implement a Hash Map in Python?
+
+What are some variations of a Hash Map?
+
+How to choose between different implementations of a Hash Map?
+
+What are common operations performed on a Hash Map?
+
+How to perform key-value operations on a Hash Map?
+
+How to implement operations for a Hash Map in pseudocode?
+
+How to implement operations for a Hash Map in Python?
+
+How to debug common issues with a Hash Map?
+
+What are the edge cases to consider when using a Hash Map?
+
+How does a Hash Map handle collisions?
+
+How does a Hash Map behave with large datasets?
+
+What is the time complexity of Hash Map operations?
+
+What is the space complexity of a Hash Map?
+
+What are the trade-offs between time and space complexity for a Hash Map?
+
+What is the worst-case scenario for a Hash Map?
+
+What are the common pitfalls when using a Hash Map?
+
+How can you optimize a Hash Map for better performance?
+
+What is a real-world application of a Hash Map?
+
+## Heap
+
+What is a Heap?
+
+What are the key characteristics of a Heap?
+
+When should you use a Heap?
+
+What are the advantages of a Heap?
+
+What are the disadvantages of a Heap?
+
+How does a Heap compare to a Binary Search Tree?
+
+How to implement a Heap in pseudocode?
+
+How to implement a Heap in Python?
+
+What are some variations of a Heap?
+
+How to choose between different implementations of a Heap?
+
+What are common operations performed on a Heap?
+
+How to perform heapify operations on a Heap?
+
+How to implement operations for a Heap in pseudocode?
+
+How to implement operations for a Heap in Python?
+
+How to debug common issues with a Heap?
+
+What are the edge cases to consider when using a Heap?
+
+How does a Heap handle duplicates?
+
+How does a Heap behave with large datasets?
+
+What is the time complexity of Heap operations?
+
+What is the space complexity of a Heap?
+
+What are the trade-offs between time and space complexity for a Heap?
+
+What is the worst-case scenario for a Heap?
+
+What are the common pitfalls when using a Heap?
+
+How can you optimize a Heap for better performance?
+
+What is a real-world application of a Heap?
+
+## Linked List
+
+What is a Linked List?
+
+What are the key characteristics of a Linked List?
+
+When should you use a Linked List?
+
+What are the advantages of a Linked List?
+
+What are the disadvantages of a Linked List?
+
+How does a Linked List compare to an Array?
+
+How to implement a Linked List in pseudocode?
+
+How to implement a Linked List in Python?
+
+What are some variations of a Linked List?
+
+How to choose between different implementations of a Linked List?
+
+What are common operations performed on a Linked List?
+
+How to perform insertion/deletion operations on a Linked List?
+
+How to implement operations for a Linked List in pseudocode?
+
+How to implement operations for a Linked List in Python?
+
+How to debug common issues with a Linked List?
+
+What are the edge cases to consider when using a Linked List?
+
+How does a Linked List handle cycles?
+
+How does a Linked List behave with large datasets?
+
+What is the time complexity of Linked List operations?
+
+What is the space complexity of a Linked List?
+
+What are the trade-offs between time and space complexity for a Linked List?
+
+What is the worst-case scenario for a Linked List?
+
+What are the common pitfalls when using a Linked List?
+
+How can you optimize a Linked List for better performance?
+
+What is a real-world application of a Linked List?
+
+## Queue
+
+What is a Queue?
+
+What are the key characteristics of a Queue?
+
+When should you use a Queue?
+
+What are the advantages of a Queue?
+
+What are the disadvantages of a Queue?
+
+How does a Queue compare to a Stack?
+
+How to implement a Queue in pseudocode?
+
+How to implement a Queue in Python?
+
+What are some variations of a Queue?
+
+How to choose between different implementations of a Queue?
+
+What are common operations performed on a Queue?
+
+How to perform enqueue/dequeue operations on a Queue?
+
+How to implement operations for a Queue in pseudocode?
+
+How to implement operations for a Queue in Python?
+
+How to debug common issues with a Queue?
+
+What are the edge cases to consider when using a Queue?
+
+How does a Queue handle overflow/underflow?
+
+How does a Queue behave with large datasets?
+
+What is the time complexity of Queue operations?
+
+What is the space complexity of a Queue?
+
+What are the trade-offs between time and space complexity for a Queue?
+
+What is the worst-case scenario for a Queue?
+
+What are the common pitfalls when using a Queue?
+
+How can you optimize a Queue for better performance?
+
+What is a real-world application of a Queue?
+
+## Stack
+
+What is a Stack?
+
+What are the key characteristics of a Stack?
+
+When should you use a Stack?
+
+What are the advantages of a Stack?
+
+What are the disadvantages of a Stack?
+
+How does a Stack compare to a Queue?
+
+How to implement a Stack in pseudocode?
+
+How to implement a Stack in Python?
+
+What are some variations of a Stack?
+
+How to choose between different implementations of a Stack?
+
+What are common operations performed on a Stack?
+
+How to perform push/pop operations on a Stack?
+
+How to implement operations for a Stack in pseudocode?
+
+How to implement operations for a Stack in Python?
+
+How to debug common issues with a Stack?
+
+What are the edge cases to consider when using a Stack?
+
+How does a Stack handle overflow/underflow?
+
+How does a Stack behave with large datasets?
+
+What is the time complexity of Stack operations?
+
+What is the space complexity of a Stack?
+
+What are the trade-offs between time and space complexity for a Stack?
+
+What is the worst-case scenario for a Stack?
+
+What are the common pitfalls when using a Stack?
+
+How can you optimize a Stack for better performance?
+
+What is a real-world application of a Stack?
+
+## Trees
+
+What is a Tree?
+
+What are the key characteristics of a Tree?
+
+When should you use a Tree?
+
+What are the advantages of a Tree?
+
+What are the disadvantages of a Tree?
+
+How does a Tree compare to a Graph?
+
+How to implement a Tree in pseudocode?
+
+How to implement a Tree in Python?
+
+What are some variations of a Tree?
+
+How to choose between different implementations of a Tree?
+
+What are common operations performed on a Tree?
+
+How to perform traversal operations on a Tree?
+
+How to implement operations for a Tree in pseudocode?
+
+How to implement operations for a Tree in Python?
+
+How to debug common issues with a Tree?
+
+What are the edge cases to consider when using a Tree?
+
+How does a Tree handle unbalanced structures?
+
+How does a Tree behave with large datasets?
+
+What is the time complexity of Tree operations?
+
+What is the space complexity of a Tree?
+
+What are the trade-offs between time and space complexity for a Tree?
+
+What is the worst-case scenario for a Tree?
+
+What are the common pitfalls when using a Tree?
+
+How can you optimize a Tree for better performance?
+
+What is a real-world application of a Tree?
+
+## Tries
+
+What is a Trie?
+
+What are the key characteristics of a Trie?
+
+When should you use a Trie?
+
+What are the advantages of a Trie?
+
+What are the disadvantages of a Trie?
+
+How does a Trie compare to a Hash Map?
+
+How to implement a Trie in pseudocode?
+
+How to implement a Trie in Python?
+
+What are some variations of a Trie?
+
+How to choose between different implementations of a Trie?
+
+What are common operations performed on a Trie?
+
+How to perform insertion/search operations on a Trie?
+
+How to implement operations for a Trie in pseudocode?
+
+How to implement operations for a Trie in Python?
+
+How to debug common issues with a Trie?
+
+What are the edge cases to consider when using a Trie?
+
+How does a Trie handle prefix matching?
+
+How does a Trie behave with large datasets?
+
+What is the time complexity of Trie operations?
+
+What is the space complexity of a Trie?
+
+What are the trade-offs between time and space complexity for a Trie?
+
+What is the worst-case scenario for a Trie?
+
+What are the common pitfalls when using a Trie?
+
+How can you optimize a Trie for better performance?
+
+What is a real-world application of a Trie?
+
+---
+
+## Sliding Window
+
+What is the Sliding Window technique?
+
+What are the key characteristics of Sliding Window?
+
+When should you use Sliding Window?
+
+What are the advantages of Sliding Window?
+
+What are the disadvantages of Sliding Window?
+
+How does Sliding Window compare to other techniques?
+
+How to implement Sliding Window in pseudocode?
+
+How to implement Sliding Window in Python?
+
+What are some variations of Sliding Window?
+
+How to choose between different implementations of Sliding Window?
+
+What are common patterns in Sliding Window problems?
+
+How to identify Sliding Window problems?
+
+How to debug common issues with Sliding Window?
+
+What are the edge cases to consider when using Sliding Window?
+
+How does Sliding Window handle different window sizes?
+
+How does Sliding Window behave with large datasets?
+
+What is the time complexity of Sliding Window?
+
+What is the space complexity of Sliding Window?
+
+What are the trade-offs between time and space complexity for Sliding Window?
+
+What is the worst-case scenario for Sliding Window?
+
+What are the common pitfalls when using Sliding Window?
+
+How can you optimize Sliding Window for better performance?
+
+What is a real-world application of Sliding Window?
+
+## Two Pointers
+
+What is the Two Pointers technique?
+
+What are the key characteristics of Two Pointers?
+
+When should you use Two Pointers?
+
+What are the advantages of Two Pointers?
+
+What are the disadvantages of Two Pointers?
+
+How does Two Pointers compare to other techniques?
+
+How to implement Two Pointers in pseudocode?
+
+How to implement Two Pointers in Python?
+
+What are some variations of Two Pointers?
+
+How to choose between different implementations of Two Pointers?
+
+What are common patterns in Two Pointers problems?
+
+How to identify Two Pointers problems?
+
+How to debug common issues with Two Pointers?
+
+What are the edge cases to consider when using Two Pointers?
+
+How does Two Pointers handle sorted vs unsorted arrays?
+
+How does Two Pointers behave with large datasets?
+
+What is the time complexity of Two Pointers?
+
+What is the space complexity of Two Pointers?
+
+What are the trade-offs between time and space complexity for Two Pointers?
+
+What is the worst-case scenario for Two Pointers?
+
+What are the common pitfalls when using Two Pointers?
+
+How can you optimize Two Pointers for better performance?
+
+What is a real-world application of Two Pointers?
+
+## Recursion
+
+What is Recursion?
+
+What are the key characteristics of Recursion?
+
+When should you use Recursion?
+
+What are the advantages of Recursion?
+
+What are the disadvantages of Recursion?
+
+How does Recursion compare to iteration?
+
+How to implement Recursion in pseudocode?
+
+How to implement Recursion in Python?
+
+What are some variations of Recursive approaches?
+
+How to choose between different implementations of Recursion?
+
+What are common patterns in Recursive problems?
+
+How to identify problems suitable for Recursion?
+
+How to debug common issues with Recursion?
+
+What are the edge cases to consider when using Recursion?
+
+How does Recursion handle stack overflow?
+
+How does Recursion behave with large datasets?
+
+What is the time complexity of Recursive solutions?
+
+What is the space complexity of Recursive solutions?
+
+What are the trade-offs between time and space complexity for Recursion?
+
+What is the worst-case scenario for Recursion?
+
+What are the common pitfalls when using Recursion?
+
+How can you optimize Recursive solutions for better performance?
+
+What is a real-world application of Recursion?
+
+## Backtracking
+
+What is Backtracking?
+
+What are the key characteristics of Backtracking?
+
+When should you use Backtracking?
+
+What are the advantages of Backtracking?
+
+What are the disadvantages of Backtracking?
+
+How does Backtracking compare to other techniques?
+
+How to implement Backtracking in pseudocode?
+
+How to implement Backtracking in Python?
+
+What are some variations of Backtracking?
+
+How to choose between different implementations of Backtracking?
+
+What are common patterns in Backtracking problems?
+
+How to identify problems suitable for Backtracking?
+
+How to debug common issues with Backtracking?
+
+What are the edge cases to consider when using Backtracking?
+
+How does Backtracking handle state management?
+
+How does Backtracking behave with large datasets?
+
+What is the time complexity of Backtracking solutions?
+
+What is the space complexity of Backtracking solutions?
+
+What are the trade-offs between time and space complexity for Backtracking?
+
+What is the worst-case scenario for Backtracking?
+
+What are the common pitfalls when using Backtracking?
+
+How can you optimize Backtracking solutions for better performance?
+
+What is a real-world application of Backtracking?
+
+## Dynamic Programming
+
+What is Dynamic Programming?
+
+What are the key characteristics of Dynamic Programming?
+
+When should you use Dynamic Programming?
+
+What are the advantages of Dynamic Programming?
+
+What are the disadvantages of Dynamic Programming?
+
+How does Dynamic Programming compare to other techniques?
+
+How to implement Dynamic Programming in pseudocode?
+
+How to implement Dynamic Programming in Python?
+
+What are some variations of Dynamic Programming?
+
+How to choose between different implementations of Dynamic Programming?
+
+What are common patterns in Dynamic Programming problems?
+
+How to identify problems suitable for Dynamic Programming?
+
+How to debug common issues with Dynamic Programming?
+
+What are the edge cases to consider when using Dynamic Programming?
+
+How does Dynamic Programming handle overlapping subproblems?
+
+How does Dynamic Programming behave with large datasets?
+
+What is the time complexity of Dynamic Programming solutions?
+
+What is the space complexity of Dynamic Programming solutions?
+
+What are the trade-offs between time and space complexity for Dynamic Programming?
+
+What is the worst-case scenario for Dynamic Programming?
+
+What are the common pitfalls when using Dynamic Programming?
+
+How can you optimize Dynamic Programming solutions for better performance?
+
+What is a real-world application of Dynamic Programming?
+
+## Greedy Algorithm
+
+What is a Greedy Algorithm?
+
+What are the key characteristics of Greedy Algorithms?
+
+When should you use a Greedy Algorithm?
+
+What are the advantages of Greedy Algorithms?
+
+What are the disadvantages of Greedy Algorithms?
+
+How do Greedy Algorithms compare to other techniques?
+
+How to implement a Greedy Algorithm in pseudocode?
+
+How to implement a Greedy Algorithm in Python?
+
+What are some variations of Greedy Algorithms?
+
+How to choose between different implementations of Greedy Algorithms?
+
+What are common patterns in Greedy Algorithm problems?
+
+How to identify problems suitable for Greedy Algorithms?
+
+How to debug common issues with Greedy Algorithms?
+
+What are the edge cases to consider when using Greedy Algorithms?
+
+How do Greedy Algorithms handle local vs global optima?
+
+How do Greedy Algorithms behave with large datasets?
+
+What is the time complexity of Greedy Algorithm solutions?
+
+What is the space complexity of Greedy Algorithm solutions?
+
+What are the trade-offs between time and space complexity for Greedy Algorithms?
+
+What is the worst-case scenario for Greedy Algorithms?
+
+What are the common pitfalls when using Greedy Algorithms?
+
+How can you optimize Greedy Algorithm solutions for better performance?
+
+What is a real-world application of Greedy Algorithms?
+
+## Intervals
+
+What is an Interval?
+
+What are the key characteristics of Intervals?
+
+When should you use Intervals?
+
+What are the advantages of using Intervals?
+
+What are the disadvantages of using Intervals?
+
+How do Intervals compare to other techniques?
+
+How to implement Interval operations in pseudocode?
+
+How to implement Interval operations in Python?
+
+What are some variations of Interval problems?
+
+How to choose between different implementations of Interval algorithms?
+
+What are common patterns in Interval problems?
+
+How to identify problems suitable for Interval-based solutions?
+
+How to debug common issues with Interval algorithms?
+
+What are the edge cases to consider when working with Intervals?
+
+How do Interval algorithms handle overlapping ranges?
+
+How do Interval algorithms behave with large datasets?
+
+What is the time complexity of Interval-based solutions?
+
+What is the space complexity of Interval-based solutions?
+
+What are the trade-offs between time and space complexity for Interval algorithms?
+
+What is the worst-case scenario for Interval-based solutions?
+
+What are the common pitfalls when working with Intervals?
+
+How can you optimize Interval-based solutions for better performance?
+
+What is a real-world application of Intervals?
+
+## Bit Manipulation
+
+What is Bit Manipulation?
+
+What are the key characteristics of Bit Manipulation?
+
+When should you use Bit Manipulation?
+
+What are the advantages of Bit Manipulation?
+
+What are the disadvantages of Bit Manipulation?
+
+How does Bit Manipulation compare to other techniques?
+
+How to implement Bit Manipulation in pseudocode?
+
+How to implement Bit Manipulation in Python?
+
+What are some variations of Bit Manipulation techniques?
+
+How to choose between different Bit Manipulation operations?
+
+What are common patterns in Bit Manipulation problems?
+
+How to identify problems suitable for Bit Manipulation?
+
+How to debug common issues with Bit Manipulation?
+
+What are the edge cases to consider when using Bit Manipulation?
+
+How does Bit Manipulation handle different data types?
+
+How does Bit Manipulation behave with large numbers?
+
+What is the time complexity of Bit Manipulation operations?
+
+What is the space complexity of Bit Manipulation solutions?
+
+What are the trade-offs between time and space complexity for Bit Manipulation?
+
+What is the worst-case scenario for Bit Manipulation?
+
+What are the common pitfalls when using Bit Manipulation?
+
+How can you optimize Bit Manipulation operations for better performance?
+
+What is a real-world application of Bit Manipulation?
